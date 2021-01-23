@@ -1,0 +1,22 @@
+{
+  "bin": {
+    "fit2geojson": "cli.js"
+  },
+  "name": "fit2geojson",
+  "version": "1.0.0",
+  "description": "Converts garmin FIT files to Geojson",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "David Carr",
+  "license": "ISC",
+  "dependencies": {
+    "concat-stream": "^2.0.0",
+    "easy-fit": "0.0.8",
+    "fs": "0.0.1-security",
+    "minimist": "^1.2.5",
+    "util": "^0.12.3",
+    "xml2js": "^0.4.23"
+  }
+}
