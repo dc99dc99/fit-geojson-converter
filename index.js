@@ -78,7 +78,7 @@ function get_gpx_data(node, result) {
     return result
 }
 
-function transformGpxData(data) {
+function transformGpxData(data, maxLineElements) {
     
     let geo = {}
     geo.type = 'FeatureCollection'
@@ -88,89 +88,79 @@ function transformGpxData(data) {
       let prev_position_lat = 0
       let idx_records = 0
       let element = {}
-      for (
-        idx_records = 0;
-        idx_records < data.segments[0].length;
-        idx_records++
-      ) {
+      let coordinates = []
+      for (idx_records = 0;idx_records < data.segments[0].length;idx_records++) {
         element = data.segments[0][idx_records]
-        //data.segments[0].forEach(element => {
-        //console.error('elemento', element)
+
         if (Array.isArray(element.loc)) {
-          if (idx_records > 0) {
+
+          if(idx_records != 0 
+            && ((maxLineElements && idx_records % maxLineElements == 0) 
+                || idx_records == data.records.length - 1)){
             let f = {}
             f.type = 'Feature'
             f.properties = element
             f.geometry = {}
             f.geometry.type = 'LineString'
-            f.geometry.coordinates = [
-              [prev_position_long, prev_position_lat],
-              [element.loc[1], element.loc[0]]
-            ]
+            f.geometry.coordinates = coordinates
             geo.features.push(f)
+            coordinates = []
           }
-          prev_position_long = element.loc[1]
-          prev_position_lat = element.loc[0]
-        } else {
-          //console.error(element.loc)
+          coordinates.push([element.loc[1], element.loc[0]])  
         }
       }
     }
     return geo
 }
 
-async function parseGpxFile(gpxContent) {
+async function parseGpxFile(gpxContent, maxLineElements) {
 
     try{
-        var xml = await parseStringAsync(xml);
+        var xml = await parseStringAsync(gpxContent);
     }catch(error){
         console.log(error)
     }
 
     if (xml) {
-        var objGpx = get_gpx_data(xml.documentElement)
+        var objGpx = get_gpx_data(xml)
         console.log("loaded GPX data")
-        return transformGpxData(objGpx)
+        return transformGpxData(objGpx, maxLineElements)
     } else {
         console.log("Error loading GPX data")
     }
 }
 
-function transformFitData(data) {
+function transformFitData(data, maxLineElements) {
     let geo = {}
     geo.type = 'FeatureCollection'
     geo.features = []
     if (data && data.records) {
-      let prev_position_long = 0
-      let prev_position_lat = 0
       let idx_records = 0
       let element = {}
-      for (
-        idx_records = 0;
-        idx_records < data.records.length;
-        idx_records++
-      ) {
-        element = data.records[idx_records]
-        if (idx_records > 0) {
+      let coordinates = []
+      for (idx_records = 0;idx_records < data.records.length; idx_records++ ) {
+        
+        if(idx_records != 0 
+          && ((maxLineElements && idx_records % maxLineElements == 0) 
+              || idx_records == data.records.length - 1)){
           let f = {}
           f.type = 'Feature'
           f.properties = element
           f.geometry = {}
           f.geometry.type = 'LineString'
-          f.geometry.coordinates = [
-            [prev_position_long, prev_position_lat],
-            [element.position_long, element.position_lat]
-          ]
+          f.geometry.coordinates = coordinates
           geo.features.push(f)
+          coordinates = []
         }
-        prev_position_long = element.position_long
-        prev_position_lat = element.position_lat
+
+        element = data.records[idx_records]
+        coordinates.push([element.position_long, element.position_lat]);
       }
     }
     return geo
 }
 
-async function parseFitFile(data) {
+async function parseFitFile(data, maxLineElements) {
 
     var easyFit = new EasyFit({
       force: true,
@@ -195,7 +185,7 @@ async function parseFitFile(data) {
         })
         console.log("loaded file data")
         console.log("transforming to geojson..")
-        return transformFitData(result)
+        return transformFitData(result, maxLineElements)
     }catch(error){
         console.log(error)
         return error
