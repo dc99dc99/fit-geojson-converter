@@ -154,7 +154,10 @@ function transformFitData(data, maxLineElements) {
         }
 
         element = data.records[idx_records]
-        coordinates.push([element.position_long, element.position_lat]);
+        if(element.position_long!=null &&  element.position_lat!=null)
+          coordinates.push([element.position_long, element.position_lat]);
+        else
+          console.log(`Warning: element ${JSON.stringify(element)} was missing long or lat`)
       }
     }
     return geo
