@@ -3,7 +3,7 @@
     "fit2geojson": "cli.js"
   },
   "name": "fit2geojson",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Converts garmin FIT files to Geojson",
   "main": "index.js",
   "scripts": {
