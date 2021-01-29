@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 
-var fit2gjson = require('./index')
+var fitGjsonConverter = require('./index')
 var fs = require('fs')
 
 var argv = require('minimist')(process.argv.slice(2))
 var concat = require('concat-stream')
 
-var usage = `fit2geojson <fit-file|gpx-file>`
+var usage = `fit-geojson-converter <fit-file|gpx-file>`
 var stdin
 
 if (argv.help) {

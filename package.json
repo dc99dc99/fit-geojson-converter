@@ -1,8 +1,8 @@
 {
   "bin": {
-    "fit2geojson": "cli.js"
+    "fit-geojson-converter": "cli.js"
   },
-  "name": "fit2geojson",
+  "name": "fit-geojson-converter",
   "version": "1.0.1",
   "description": "Converts garmin FIT files to Geojson",
   "main": "index.js",
