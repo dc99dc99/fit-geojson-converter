@@ -18,7 +18,7 @@ let geojson = await fitGeojsonConverter.transformFit(source)
 
 ```
 
-There are two methods `transformFit()` and `transformGpx()`. Both take an optional maxLineElements second parameter which will split long lines into smaller features
+There is one method `transformFit()` which takes an optiona maxLineElements second parameter which will split long lines into separate line features
 
 ```
 //generates a geojson file containing LineString features, each 
