@@ -1,5 +1,4 @@
 var EasyFit = require('easy-fit').default
-var parseStringAsync = require('xml2js').parseStringPromise;
 const util = require('util')
 const fs = require('fs').promises
 
