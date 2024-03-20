@@ -6,7 +6,7 @@ var fs = require('fs')
 var argv = require('minimist')(process.argv.slice(2))
 var concat = require('concat-stream')
 
-var usage = `fit-geojson-converter <fit-file|gpx-file>`
+var usage = `fit-geojson-converter <fit-file>`
 var stdin
 
 if (argv.help) {
@@ -25,15 +25,7 @@ if (argv._[0] && argv._[0] !== '-') {
 
 stdin.pipe(concat(function (buffer) {
 
-	   
-	if(argv._[0].toLowerCase().endsWith(".gpx")){
-		fit2gjson.transformGpx(buffer).then(
-			function(result){
-				console.log(JSON.stringify(result, null, 0))
-			}
-		)
-	}
-	else if(argv._[0].toLowerCase().endsWith(".fit")){
+	if(argv._[0].toLowerCase().endsWith(".fit")){
 		fit2gjson.transformFit(buffer).then(
 			function(result){
 				console.log(JSON.stringify(result, null, 0))
@@ -41,6 +33,6 @@ stdin.pipe(concat(function (buffer) {
 		)
 	}
 	else{
-		console.log("file must end with .gpx or .fit")
+		console.log("file must end with .fit")
 	}
 }))

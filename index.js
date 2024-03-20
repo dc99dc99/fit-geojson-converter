@@ -1,6 +1,4 @@
 var EasyFit = require('easy-fit').default
-const util = require('util')
-const fs = require('fs').promises
 
 module.exports = {
     transformFit: parseFitFile

@@ -12,10 +12,7 @@
   "author": "David Carr",
   "license": "ISC",
   "dependencies": {
-    "concat-stream": "^2.0.0",
     "easy-fit": "0.0.8",
-    "fs": "0.0.1-security",
-    "minimist": "^1.2.5",
-    "util": "^0.12.3"
+    "minimist": "^1.2.5"
   }
 }
