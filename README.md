@@ -7,7 +7,7 @@ npm install fit-geojson-converter
 
 # Usage
 
-You may use fit-geojson-converter to convert a fit or gpx file to geojson, optionally constraining the number of vertices per line:
+You may use fit-geojson-converter to convert a fit file to geojson, optionally constraining the number of vertices per line:
 
 ```
 const fitGeojsonConverter = require('fit-geojson-converter')
